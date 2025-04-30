@@ -1,6 +1,6 @@
 # Reminders API
 
-A spring boot rest api for storing and managing reminders.
+A spring boot rest api for storing and managing reminders and a ReactJS front end for UI.
 
 ## Tech Stack
 
