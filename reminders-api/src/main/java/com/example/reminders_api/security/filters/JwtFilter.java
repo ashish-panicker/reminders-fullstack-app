@@ -1,7 +1,7 @@
-package com.example.security_demo.security.filters;
+package com.example.reminders_api.security.filters;
 
-import com.example.security_demo.security.service.CustomUserDetailsService;
-import com.example.security_demo.security.util.JwtUtil;
+import com.example.reminders_api.security.service.CustomUserDetailsService;
+import com.example.reminders_api.security.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

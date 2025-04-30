@@ -1,6 +1,6 @@
-package com.example.reminders_api.security.repo;
+package com.example.reminders_api.repository;
 
-import com.example.reminders_api.security.model.AppUser;
+import com.example.reminders_api.model.AppUser;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

@@ -1,10 +1,9 @@
-package com.example.reminders_api.security.controller;
+package com.example.reminders_api.controller;
 
-import com.example.reminders_api.security.dto.LoginRequest;
-import com.example.reminders_api.security.dto.RegisterRequest;
-import com.example.reminders_api.security.model.AppUser;
-import com.example.reminders_api.security.repo.AppUserRepository;
-import com.example.reminders_api.security.service.AppUserService;
+import com.example.reminders_api.dto.LoginRequest;
+import com.example.reminders_api.dto.RegisterRequest;
+import com.example.reminders_api.model.AppUser;
+import com.example.reminders_api.service.AppUserService;
 import com.example.reminders_api.security.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;

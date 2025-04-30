@@ -1,7 +1,9 @@
-package com.example.security_demo.security.config;
+package com.example.reminders_api.security.config;
 
-import com.example.security_demo.security.filters.JwtFilter;
-import jakarta.servlet.Filter;
+import com.example.reminders_api.security.filters.JwtFilter;
+import com.example.reminders_api.security.handlers.CustomAccessDeniedHandler;
+import com.example.reminders_api.security.handlers.CustomAuthenticationEntryPoint;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -10,8 +12,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,36 +24,18 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getName());
     private final UserDetailsService userDetailsService;
     private final JwtFilter jwtAuthFilter;
 
-    public SecurityConfig(UserDetailsService userDetailsService, JwtFilter jwtAuthFilter) {
-        this.userDetailsService = userDetailsService;
-        this.jwtAuthFilter = jwtAuthFilter;
-    }
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-//        UserDetails user, admin;
-//        user = User.withUsername("ashish").roles("USER")
-//                .password(passwordEncoder().encode("Welcome123"))
-//                .build();
-//        logger.info("User: {} {}", user, user.getPassword());
-//        admin = User.withUsername("admin").roles("ADMIN")
-//                .password(passwordEncoder().encode("Welcome123"))
-//                .build();
-//        logger.info("Admin: {} {}", admin, admin.getPassword());
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
 
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
@@ -67,18 +54,22 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(csrf -> csrf.disable())
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/h2", "/h2/**", "/public", "/auth/**", "/").permitAll()
-                        .requestMatchers("/users", "/users/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/auth", "/auth/**", "/public").permitAll()
+                        .requestMatchers("/reminders", "/reminders/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(exp -> {
+                    exp.accessDeniedHandler(new CustomAccessDeniedHandler())
+                            .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+                })
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .headers(headers -> headers.frameOptions(
-                        frameOptions -> frameOptions.disable()))
                 .httpBasic(Customizer.withDefaults());
-        return httpSecurity.build();
+        return http.build();
     }
 }

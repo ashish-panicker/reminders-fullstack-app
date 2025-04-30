@@ -1,7 +1,7 @@
-package com.example.security_demo.security.service;
+package com.example.reminders_api.security.service;
 
-import com.example.security_demo.security.model.CustomUserDetails;
-import com.example.security_demo.security.repo.AppUserRepository;
+import com.example.reminders_api.security.model.CustomUserDetails;
+import com.example.reminders_api.repository.AppUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

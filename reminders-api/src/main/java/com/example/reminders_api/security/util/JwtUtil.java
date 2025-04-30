@@ -1,4 +1,4 @@
-package com.example.security_demo.security.util;
+package com.example.reminders_api.security.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

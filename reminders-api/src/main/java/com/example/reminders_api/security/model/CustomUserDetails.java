@@ -1,5 +1,6 @@
-package com.example.security_demo.security.model;
+package com.example.reminders_api.security.model;
 
+import com.example.reminders_api.model.AppUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

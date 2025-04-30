@@ -1,7 +1,7 @@
-package com.example.reminders_api.security.service;
+package com.example.reminders_api.service;
 
-import com.example.reminders_api.security.model.AppUser;
-import com.example.reminders_api.security.repo.AppUserRepository;
+import com.example.reminders_api.model.AppUser;
+import com.example.reminders_api.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.reminders_api.security.model;
+package com.example.reminders_api.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
