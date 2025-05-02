@@ -1,8 +1,13 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import login from '../assets/login.svg'
+import loginImage from '../assets/login.svg'
+import { login as loginFromApi } from '../services/auth.service'
+import { use } from 'react'
+import AuthContext from '../context/AuthContext'
 
 const Login = () => {
+	const { login } = use(AuthContext)
+
 	const initFormState = {
 		username: '',
 		password: '',
@@ -18,7 +23,13 @@ const Login = () => {
 	const formik = useFormik({
 		initialValues: initFormState,
 		validationSchema: schema,
-		onSubmit: (formValue) => console.log(formValue),
+		onSubmit: async (form) => {
+			const loginForm = { userName: form.username, password: form.password }
+			console.log(loginForm)
+			const response = await loginFromApi(loginForm)
+			console.log(response.data)
+			login(response.data.token)
+		},
 	})
 
 	return (
@@ -26,7 +37,7 @@ const Login = () => {
 			{/* Left Image Section */}
 			<div className='hidden md:flex items-center justify-center'>
 				<img
-					src={login}
+					src={loginImage}
 					alt='Login Illustration'
 					className='w-auto h-auto pt-8'
 				/>
