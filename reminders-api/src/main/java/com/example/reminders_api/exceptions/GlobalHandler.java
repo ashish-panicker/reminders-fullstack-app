@@ -24,11 +24,11 @@ public class GlobalHandler {
                 .body(new ReminderResponse(HttpStatus.INTERNAL_SERVER_ERROR, errors));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ReminderResponse> handleException(Exception ex) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ReminderResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ReminderResponse> handleException(Exception ex) {
+//        return ResponseEntity
+//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(new ReminderResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()));
+//    }
 
 }

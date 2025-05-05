@@ -16,6 +16,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         log.info("Responding with unauthorized error. Message - {}", e.getMessage());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
-        response.getWriter().write("{\"status\":" + HttpServletResponse.SC_UNAUTHORIZED +", \"payload\": \"Unauthorized access - please login\"}");
+        response.
+                getWriter()
+                .write("{\"status\":" + HttpServletResponse.SC_UNAUTHORIZED + ", " +
+                        "\"payload\": \"Unauthorized access - please login\"}");
     }
 }

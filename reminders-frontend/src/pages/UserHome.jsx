@@ -6,14 +6,10 @@ const UserHomePage = () => {
 		<div className=' px-6 py-10'>
 			<div className='max-w-7xl mx-auto grid md:grid-cols-2 gap-8'>
 				{/* Left: Form */}
-				<div>
-					<NewReminderForm />
-				</div>
+				<NewReminderForm />
 
 				{/* Right: List */}
-				<div>
-					<ReminderList />
-				</div>
+				<ReminderList />
 			</div>
 		</div>
 	)

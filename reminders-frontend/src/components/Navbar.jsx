@@ -7,7 +7,8 @@ const Navbar = () => {
 	const { token, logout } = use(AuthContext)
 	const navigate = useNavigate()
 	const [menuOpen, setMenuOpen] = React.useState(false)
-	const username = 'Ashish' // replace with dynamic username if available
+	// replace with dynamic username if available
+	const username = 'Ashish'
 
 	return (
 		<div className='bg-purple-900  container-lg'>
@@ -47,7 +48,9 @@ const Navbar = () => {
 							</button>
 
 							{menuOpen && (
-								<div className='absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded-lg shadow-lg z-10'>
+								<div
+									className='absolute right-0 mt-2 w-40 bg-white text-gray-700 rounded-lg 
+								shadow-lg z-10'>
 									<a
 										href='/profile'
 										className='block px-4 py-2 hover:bg-purple-100 transition'>

@@ -1,14 +1,15 @@
-import { replace, useFormik } from 'formik'
+import React, { use } from 'react'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import loginImage from '../assets/login.svg'
-import { login as loginFromApi } from '../services/auth.service'
-import { use } from 'react'
-import AuthContext from '../context/AuthContext'
 import { useNavigate } from 'react-router'
+import loginImage from '../assets/login.svg'
+import AuthContext from '../context/AuthContext'
+import { login as loginFromApi } from '../services/auth.service'
 
 const Login = () => {
 	const { login } = use(AuthContext)
 	const navigate = useNavigate()
+	const [errorMessage, setErrorMessage] = React.useState(null)
 
 	const initFormState = {
 		username: '',
@@ -25,12 +26,18 @@ const Login = () => {
 	const formik = useFormik({
 		initialValues: initFormState,
 		validationSchema: schema,
-		onSubmit: async (form) => {
-			const loginForm = { userName: form.username, password: form.password }
-			const response = await loginFromApi(loginForm)
-			if (response.status === 200) {
+		onSubmit: async (form, { setSubmitting }) => {
+			try {
+				const loginForm = { userName: form.username, password: form.password }
+				const response = await loginFromApi(loginForm)
+				console.log(response)
 				login(response.data.token)
 				navigate('/home', { replace: true })
+			} catch (error) {
+				console.log(error)
+				setErrorMessage(error.data.payload)
+			} finally {
+				setSubmitting(false)
 			}
 		},
 	})
@@ -56,9 +63,18 @@ const Login = () => {
 						Login to access your reminders—because forgetting is so last year
 					</p>
 				</div>
+
+				{/* Show a logging in message when user clicks log in */}
+				{formik.isSubmitting && (
+					<div
+						className={`text-center text-2xl fton-semibold p-8 my-6 w-full max-w-md bg-white 
+							rounded-2xl shadow-2xl `}>
+						{' Logging you in, please wait '}
+					</div>
+				)}
 				{/* Right Form Section */}
 				<form
-					className='p-8 w-full max-w-md bg-white rounded-2xl shadow-2xl'
+					className={`p-8 w-full max-w-md bg-white rounded-2xl shadow-2xl `}
 					onSubmit={formik.handleSubmit}>
 					<h2 className='text-2xl font-bold mb-6 text-center text-purple-600'>
 						Login
@@ -115,10 +131,16 @@ const Login = () => {
 						) : null}
 					</div>
 					<button
+						disabled={formik.isSubmitting}
 						type='submit'
-						className='w-full bg-purple-700 text-white py-2 rounded hover:bg-purple-800 transition'>
-						Login
+						className={`disabled:bg-purple-500 disabled:cursor-not-allowed bg-purple-600 w-full text-white py-2 rounded hover:bg-purple-800`}>
+						{formik.isSubmitting ? 'Logging in...' : 'Login'}
 					</button>
+					{errorMessage && (
+						<div className='text-red-700 bg-red-100 px-2 py-2 mt-5 rounded-lg mb-4 transition-all duration-300 ease-in-out opacity-100'>
+							<p>{errorMessage}</p>
+						</div>
+					)}
 				</form>
 			</div>
 		</div>

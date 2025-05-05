@@ -18,6 +18,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403
         response.setContentType("application/json");
         response.getWriter()
-                .write("{\"status\":" + HttpServletResponse.SC_UNAUTHORIZED +", \"payload\": \"Unauthorized access - please login\"}");
+                .write("{\"status\":" + HttpServletResponse.SC_UNAUTHORIZED +", \"payload\": \"Bad username or password.\"}");
     }
 }

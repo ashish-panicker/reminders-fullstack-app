@@ -33,7 +33,7 @@ const NewReminderForm = () => {
 
 			<form
 				onSubmit={formik.handleSubmit}
-				className='space-y-5'>
+				className='space-y-5 max-h-100 '>
 				{/* Reminder Input */}
 				<div>
 					<label

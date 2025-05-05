@@ -46,7 +46,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         if (userService.findByUserName(request.userName()).isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exists");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(
+                            Map.of("status", HttpStatus.UNAUTHORIZED, "payload", "User does not exists")
+                    );
         }
         var unAuthenticatedUser = new UsernamePasswordAuthenticationToken(
                 request.userName(), request.password()
