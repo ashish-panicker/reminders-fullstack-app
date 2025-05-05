@@ -1,9 +1,22 @@
 import axios from 'axios'
 
+export const register = async (registerForm) => {
+	const url = `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_REGISTER_ENDPOINT}`
+	try {
+		const response = await axios.post(url, registerForm)
+		console.log(response)
+	} catch (error) {
+		console.error(error)
+		throw {
+			status: error.response.status,
+			data: error.response.data,
+		}
+	}
+}
+
 export const login = async (loginForm) => {
-	const url = `${import.meta.env.VITE_API_URL}${
-		import.meta.env.VITE_LOGIN_ENDPOINT
-	}`
+	const url = `${import.meta.env.VITE_API_URL}${import.meta.env.VITE_LOGIN_ENDPOINT
+		}`
 	await sleep(5000)
 	try {
 		const response = await axios.post(url, loginForm)

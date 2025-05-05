@@ -1,8 +1,13 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import signup from '../assets/login.svg'
+import { register } from '../services/auth.service'
+import React from 'react'
 
 const Register = () => {
+
+	const [errorMessage, setErrorMessage] = React.useState(null)
+
 	const initFormState = {
 		username: '',
 		password: '',
@@ -22,7 +27,18 @@ const Register = () => {
 	const formik = useFormik({
 		initialValues: initFormState,
 		validationSchema: schema,
-		onSubmit: (formValue) => console.log(formValue),
+		onSubmit: async (form, {setSubmitting}) => {
+			try {
+				const registerForm = { userName: form.username, password: form.password, email: form.email }
+				const response = await register(registerForm)
+				console.log(response)
+			} catch (error) {
+				console.log(error)
+				setErrorMessage(error.data.payload)
+			}finally{
+				setSubmitting(false)
+			}
+		}
 	})
 
 	return (
@@ -131,8 +147,13 @@ const Register = () => {
 					<button
 						type='submit'
 						className='w-full bg-purple-700 text-white py-2 rounded hover:bg-purple-600 transition'>
-						Register
+						{formik.isSubmitting ? 'Registering...' : 'Register'}
 					</button>
+					{errorMessage && (
+						<div className='text-red-700 bg-red-100 px-2 py-2 mt-5 rounded-lg mb-4 transition-all duration-300 ease-in-out opacity-100'>
+							<p>{errorMessage}</p>
+						</div>
+					)}
 				</form>
 			</div>
 		</div>

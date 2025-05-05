@@ -5,6 +5,7 @@ import com.example.reminders_api.dto.RegisterRequest;
 import com.example.reminders_api.model.AppUser;
 import com.example.reminders_api.service.AppUserService;
 import com.example.reminders_api.security.util.JwtUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +33,11 @@ public class AuthController {
     private final JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-        if (userService.findByUserName(request.userName()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+        if (userService.findByUserNameOrEmail(request.userName(), request.email()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                    Map.of("status", HttpStatus.CONFLICT, "payload", "User already exists.")
+            );
         }
         var user = new AppUser(request.userName(),
                 passwordEncoder.encode(request.password()),
