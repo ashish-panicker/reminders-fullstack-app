@@ -39,7 +39,7 @@ const Register = () => {
 			{/* Right Form Section */}
 			<div className='w-full h-full max-w-md '>
 				{/* Title & One-liner */}
-				<div className='mb-6 text-center bg-white px-8 py-4 rounded-2xl'>
+				<div className='mb-6 text-center bg-white px-8 py-4 rounded-2xl shadow-lg'>
 					<h2 className='text-3xl font-bold text-purple-800 mb-2'>
 						Memory? Optional
 					</h2>
@@ -48,7 +48,7 @@ const Register = () => {
 					</p>
 				</div>
 				<form
-					className=' p-8  w-full max-w-md bg-white rounded-xl'
+					className=' p-8  w-full max-w-md bg-white rounded-2xl shadow-lg'
 					onSubmit={formik.handleSubmit}>
 					<h2 className='text-2xl font-bold mb-6 text-center text-purple-600'>
 						Register
@@ -61,7 +61,7 @@ const Register = () => {
 						<input
 							type='text'
 							name='username'
-							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded focus:outline-none 
+							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none 
 						focus:ring-2 
 						${
 							formik.touched.username && formik.errors.username
@@ -85,7 +85,7 @@ const Register = () => {
 						<input
 							type='email'
 							name='email'
-							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded focus:outline-none 
+							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none 
 						focus:ring-2 
 						${
 							formik.touched.email && formik.errors.email
@@ -110,7 +110,7 @@ const Register = () => {
 						<input
 							type='password'
 							name='password'
-							className={`w-full mb- px-4 py-2 border border-gray-300 rounded focus:outline-none 
+							className={`w-full mb- px-4 py-2 border border-gray-300 rounded-lg focus:outline-none 
 						focus:ring-2 
 						${
 							formik.touched.password && formik.errors.password

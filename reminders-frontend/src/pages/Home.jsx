@@ -1,5 +1,5 @@
 import home from '../assets/reminder.svg'
-import TitleCard from './TitleCard'
+import TitleCard from '../components/TitleCard'
 
 const Home = () => {
 	return (

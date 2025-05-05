@@ -1,12 +1,14 @@
-import { useFormik } from 'formik'
+import { replace, useFormik } from 'formik'
 import * as Yup from 'yup'
 import loginImage from '../assets/login.svg'
 import { login as loginFromApi } from '../services/auth.service'
 import { use } from 'react'
 import AuthContext from '../context/AuthContext'
+import { useNavigate } from 'react-router'
 
 const Login = () => {
 	const { login } = use(AuthContext)
+	const navigate = useNavigate()
 
 	const initFormState = {
 		username: '',
@@ -25,17 +27,18 @@ const Login = () => {
 		validationSchema: schema,
 		onSubmit: async (form) => {
 			const loginForm = { userName: form.username, password: form.password }
-			console.log(loginForm)
 			const response = await loginFromApi(loginForm)
-			console.log(response.data)
-			login(response.data.token)
+			if (response.status === 200) {
+				login(response.data.token)
+				navigate('/home', { replace: true })
+			}
 		},
 	})
 
 	return (
 		<div className='flex justify-center items-center min-h-fit gap-12'>
 			{/* Left Image Section */}
-			<div className='hidden md:flex items-center justify-center'>
+			<div className='hidden md:flex items-center justify-center '>
 				<img
 					src={loginImage}
 					alt='Login Illustration'
@@ -45,7 +48,7 @@ const Login = () => {
 
 			<div className='w-full h-full max-w-md '>
 				{/* Title & One-liner */}
-				<div className='mb-6 text-center bg-white px-8 py-4 rounded-2xl'>
+				<div className='mb-6 text-center bg-white px-8 py-4 rounded-2xl shadow-2xl'>
 					<h2 className='text-3xl font-bold text-purple-800 mb-2'>
 						Install Your Brain Backup
 					</h2>
@@ -55,7 +58,7 @@ const Login = () => {
 				</div>
 				{/* Right Form Section */}
 				<form
-					className='p-8 w-full max-w-md bg-white'
+					className='p-8 w-full max-w-md bg-white rounded-2xl shadow-2xl'
 					onSubmit={formik.handleSubmit}>
 					<h2 className='text-2xl font-bold mb-6 text-center text-purple-600'>
 						Login
@@ -68,7 +71,7 @@ const Login = () => {
 							id='username'
 							name='username'
 							type='text'
-							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded focus:outline-none 
+							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none 
 							focus:ring-2 
 							${
 								formik.touched.username && formik.errors.username
@@ -94,7 +97,7 @@ const Login = () => {
 							id='password'
 							name='password'
 							type='password'
-							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded focus:outline-none 
+							className={`w-full mb-0 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none 
 							focus:ring-2 
 							${
 								formik.touched.password && formik.errors.password

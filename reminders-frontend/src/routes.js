@@ -4,7 +4,9 @@ import { createBrowserRouter as browserRouter } from 'react-router'
 import Login from './components/Login'
 import Register from './components/Register'
 import Layout from './pages/Layout'
-import Home from './components/Home'
+import Home from './pages/Home'
+import Logout from './components/Logout'
+import UserHomePage from './pages/UserHome'
 
 const routes = [
 	{
@@ -13,7 +15,8 @@ const routes = [
 			{ path: '/', Component: Home },
 			{ path: '/login', Component: Login },
 			{ path: '/register', Component: Register },
-			{ path: '/logout', Component: Register },
+			{ path: '/home', Component: UserHomePage },
+			{ path: '/logout', Component: Logout },
 		],
 	},
 ]
