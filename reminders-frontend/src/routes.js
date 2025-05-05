@@ -4,7 +4,6 @@ import { createBrowserRouter as browserRouter } from 'react-router'
 import Login from './components/Login'
 import Register from './components/Register'
 import Layout from './pages/Layout'
-import { Component } from 'react'
 import Home from './components/Home'
 
 const routes = [
@@ -14,6 +13,7 @@ const routes = [
 			{ path: '/', Component: Home },
 			{ path: '/login', Component: Login },
 			{ path: '/register', Component: Register },
+			{ path: '/logout', Component: Register },
 		],
 	},
 ]

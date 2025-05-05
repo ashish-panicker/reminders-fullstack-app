@@ -5,6 +5,7 @@ import NavLink from './NavLink'
 
 const Navbar = () => {
 	const { token } = use(AuthContext)
+	console.log(token)
 	return (
 		<div className='bg-purple-900  container-lg'>
 			<nav className='container mx-auto h-16 flex items-center justify-between px-6 shadow-md'>

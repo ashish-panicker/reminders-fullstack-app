@@ -5,8 +5,10 @@ const AuthProvider = ({ children }) => {
 	const [token, setToken] = useState(null)
 
 	useEffect(() => {
-		localStorage.getItem('token', token)
-		setToken(token)
+		const storedToken = localStorage.getItem('token')
+		if (storedToken) {
+			setToken(storedToken)
+		}
 	}, [])
 
 	const login = (jwt) => {
